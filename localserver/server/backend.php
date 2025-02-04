@@ -77,25 +77,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         
             echo "WAN configuration successful!";
-        } elseif ($communicationType === "WIFI") {
+        }elseif ($communicationType === "WIFI") {
             $ssid = $_POST['ssid'];
             $password = $_POST['password'];
             $countryCode = $_POST['countryCode']; // Get country code from form
-
-            // Set the country code in the Raspberry Pi configuration
-            exec("sudo iw reg set $countryCode", $output, $resultCode);
-          
-
-            exec("sudo nmcli dev wifi rescan", $output, $resultCode);
-           
-            exec("sudo nmcli dev wifi connect '$ssid' password '$password' ifname wlan0 2>&1", $output, $resultCode);
-            exec("nmcli connection up preconfigured",$output, $resultCode);
-            exec("nmcli connection modify preconfigured autoconnect yes",$output, $resultCode);
-            error_log("Wi-Fi configuration command output: " . implode("\n", $output));
+        
+            error_log("SSID: " . $ssid);
+            error_log("Password: " . $password);
+            error_log("Country Code: " . $countryCode);
+        
+            // Bring down MyHotspot connection
+            exec("sudo nmcli connection down MyHotspot", $output, $resultCode);
+            sleep(2);
             if ($resultCode !== 0) {
-                throw new Exception("Failed to connect to Wi-Fi. Check error log for details.");
+                throw new Exception("Failed to bring down MyHotspot.");
             }
-        } elseif ($communicationType === "SIM" && !empty($simApn)) {
+        
+            // Set country code
+            exec("sudo iw reg set $countryCode", $output, $resultCode);
+            sleep(1);
+            if ($resultCode !== 0) {
+                throw new Exception("Failed to set country code.");
+            }
+        
+            // Update existing connection profile with new SSID and password
+            exec("sudo nmcli connection modify Wifi 802-11-wireless.ssid '$ssid'", $output, $resultCode);
+            if ($resultCode !== 0) {
+                throw new Exception("Failed to update SSID.");
+            }
+        
+            exec("sudo nmcli connection modify Wifi 802-11-wireless-security.psk '$password'", $output, $resultCode);
+            if ($resultCode !== 0) {
+                throw new Exception("Failed to update password.");
+            }
+        
+            // Bring up the connection again
+            exec("sudo nmcli connection up Wifi", $output, $resultCode);
+            sleep(5);
+            if ($resultCode !== 0) {
+                throw new Exception("Failed to reconnect to Wi-Fi.");
+            }
+            exec("nmcli connection modify Wifi autoconnect yes", $output, $resultCode);
+            if ($resultCode !== 0) {
+                throw new Exception("Failed to set autoconnect for Wi-Fi.");
+            }
+        
+            error_log("Wi-Fi configuration updated successfully.");
+        }
+        
+      
+         elseif ($communicationType === "SIM" && !empty($simApn)) {
             exec("sudo nmcli connection modify harp-gsm gsm.apn $simApn 2>&1", $output, $resultCode);
             error_log("SIM configuration command output: " . implode("\n", $output));
             if ($resultCode !== 0) {
@@ -113,5 +144,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error: " . $e->getMessage();
     }
 }
-
-

@@ -138,7 +138,7 @@
         <form id="deviceConfigForm">
             <div class="form-group">
                 <label for="communicationType">Communication Type</label>
-                <select id="communicationType" onchange="toggleFields()">
+                <select id="communicationType" name="communicationType" onchange="toggleFields()">
                     <option value="">Select</option>
                     <option value="WAN">WAN</option>
                     <option value="WIFI">WIFI</option>
@@ -148,7 +148,7 @@
             <div id="wanConfig" class="hidden">
                 <div class="form-group">
                     <label for="ipv4Config">IP Configuration</label>
-                    <select id="ipv4Config" onchange="toggleIpFields()">
+                    <select name="ipv4Config" id="ipv4Config" onchange="toggleIpFields()">
                         <option value="automatic">Automatic</option>
                         <option value="manual">Manual</option>
                     </select>
@@ -156,30 +156,30 @@
                 <div id="manualIpFields" class="hidden">
                     <div class="input-group">
                         <label for="ipAddress">IP Address</label>
-                        <input type="text" id="ipAddress" placeholder="Enter IP Address">
+                        <input type="text" name="ipAddress" placeholder="Enter IP Address">
                     </div>
                     <div class="input-group">
                         <label for="netmask">Netmask</label>
-                        <input type="text" id="netmask" placeholder="Enter Netmask">
+                        <input type="text" name="netmask" placeholder="Enter Netmask">
                     </div>
                     <div class="input-group">
                         <label for="gateway">Gateway</label>
-                        <input type="text" id="gateway" placeholder="Enter Gateway">
+                        <input type="text" name="gateway" placeholder="Enter Gateway">
                     </div>
                     <div class="input-group">
                         <label for="dns1">DNS 1</label>
-                        <input type="text" id="dns1" placeholder="Enter DNS 1">
+                        <input type="text" name="dns1" placeholder="Enter DNS 1">
                     </div>
                     <div class="input-group">
                         <label for="dns2">DNS 2</label>
-                        <input type="text" id="dns2" placeholder="Enter DNS 2">
+                        <input type="text" name="dns2" placeholder="Enter DNS 2">
                     </div>
                 </div>
             </div>
             <div id="wifiConfig" class="hidden">
                 <div class="input-group">
-                <label for="countryCode">Select Country</label>
-                <select>
+                <label for="countryCode" >Select Country</label>
+                <select id="countryCode" name="countryCode">
                     <option value="AF">Afghanistan</option>
                     <option value="AX">Åland Islands</option>
                     <option value="AL">Albania</option>
@@ -433,17 +433,17 @@
                 </div>
                 <div class="input-group">
                     <label for="ssid">SSID</label>
-                    <input type="text" id="ssid" placeholder="Enter SSID">
+                    <input type="text" name="ssid" id="ssid" placeholder="Enter SSID">
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter Password">
+                    <input type="password" name="password" id="password" placeholder="Enter Password">
                 </div>
             </div>
             <div id="simConfig" class="hidden">
                 <div class="input-group">
                     <label for="simApn">SIM APN</label>
-                    <input type="text" id="simApn" placeholder="Enter SIM APN">
+                    <input type="text" name="simApn" placeholder="Enter SIM APN">
                 </div>
             </div>
             <button type="button" onclick="submitForm()">Submit</button>
@@ -465,8 +465,35 @@
             document.getElementById('manualIpFields').classList.toggle('hidden', ipType !== 'manual');
         }
         function submitForm() {
-            alert('Configuration submitted successfully!');
-        }
+           // Submit the form through AJAX when confirmed in the modal
+
+    // Get the form data
+    const form = document.getElementById('deviceConfigForm');
+    const formData = new FormData(form);
+
+    // Perform AJAX form submission using Fetch API
+    fetch('backend.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      
+            alert('Configuration saved successfully!');
+            window.location.href = 'dashboard.html'; // Redirect to dashboard
+        
+    })
+    .catch(error => {
+        alert('There was an issue with the request: ' + error);
+    });
+}
+
+// Prevent form submission on pressing "Enter" key
+document.getElementById('deviceConfigForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+});
+
+        
     </script>
 </body>
 </html>
