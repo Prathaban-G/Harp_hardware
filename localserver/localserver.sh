@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Turn off the preconfigured connection and prevent auto-reconnect
-nmcli connection down "preconfigured"
+nmcli connection down Wifi
 #nmcli connection modify "preconfigured" autoconnect no
 
 # Enable Wi-Fi and set wlan0 to managed mode
-#sudo rfkill unblock wifi
-#sudo nmcli device set wlan0 managed yes
-#sudo nmcli device reapply wlan0
+sudo rfkill unblock wifi
+sudo nmcli device set wlan0 managed yes
+sudo nmcli device reapply wlan0
 
 # Check device status
 nmcli device status
@@ -25,7 +25,7 @@ nmcli device status
 nmcli connection up MyHotspot
 
 # Start the local server
-cd /home/pi/localserver/server
+cd /home/pi/Harp_hardware/localserver/server
 #python3 -m http.server 8080 &
 #php -S localhost:8000
 php -S 0.0.0.0:8000
