@@ -1,0 +1,12 @@
+[Unit]
+Description=Local Server Service
+After=network.target
+
+[Service]
+ExecStart=/home/pi/localserver/localserver.sh
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+
+

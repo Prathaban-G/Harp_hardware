@@ -1,0 +1,61 @@
+[01-Feb-2025 09:32:07 UTC] Testing error logging!
+[01-Feb-2025 09:32:08 UTC] Testing error logging!
+[01-Feb-2025 09:32:30 UTC] PHP Warning:  Undefined array key "REQUEST_METHOD" in /home/pi/localserver/server/backend.php on line 6
+[01-Feb-2025 09:36:27 UTC] SIM configuration command output: 
+[01-Feb-2025 09:38:12 UTC] Wi-Fi configuration command output: Error: No network with SSID 'Prathaban' found.
+[01-Feb-2025 09:39:09 UTC] Wi-Fi configuration command output: [2KDevice 'wlan0' successfully activated with 'b92a7075-6164-46be-aaf9-756b4be77576'.
+[01-Feb-2025 10:58:21 UTC] Wi-Fi configuration command output: [2KDevice 'wlan0' successfully activated with 'b92a7075-6164-46be-aaf9-756b4be77576'.
+Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/10)
+[03-Feb-2025 08:43:00 UTC] WAN configuration command output: Error: failed to modify ipv4.addresses: invalid prefix '255.255.255.1'; <0-32> allowed.
+[03-Feb-2025 08:47:11 UTC] WAN configuration command output: Error: failed to modify ipv4.addresses: invalid prefix '255.255.255.0'; <0-32> allowed.
+[03-Feb-2025 08:52:57 UTC] WAN configuration command output: Connection 'wan' (67604312-f565-4e53-bb4a-ad2245f5f857) successfully added.
+[03-Feb-2025 08:52:57 UTC] PHP Warning:  Undefined variable $dns2 in /home/pi/localserver/server/backend.php on line 42
+[03-Feb-2025 08:52:58 UTC] WAN DNS configuration command output: Connection 'wan' (67604312-f565-4e53-bb4a-ad2245f5f857) successfully added.
+[03-Feb-2025 09:07:04 UTC] WAN configured with DHCP: Connection 'wan' (9eb15404-39dc-46ec-9950-4159c0dece0b) successfully added.
+[03-Feb-2025 09:14:08 UTC] Deleted existing WAN connection before reconfiguring.
+[03-Feb-2025 09:14:08 UTC] Deleted existing WAN connection before reconfiguring.
+[03-Feb-2025 09:14:08 UTC] WAN configuration command output: wan
+Connection 'wan' (9eb15404-39dc-46ec-9950-4159c0dece0b) successfully deleted.
+wan
+Connection 'wan' (670641af-3c50-4527-b439-b5cd2d9a33fd) successfully added.
+[03-Feb-2025 09:14:08 UTC] WAN DNS configuration command output: wan
+Connection 'wan' (9eb15404-39dc-46ec-9950-4159c0dece0b) successfully deleted.
+wan
+Connection 'wan' (670641af-3c50-4527-b439-b5cd2d9a33fd) successfully added.
+[03-Feb-2025 09:24:24 UTC] Deleted existing WAN connection before reconfiguring.
+[03-Feb-2025 09:24:24 UTC] Deleted existing WAN connection before reconfiguring.
+[03-Feb-2025 09:24:24 UTC] WAN configuration command output: wan
+Connection 'wan' (670641af-3c50-4527-b439-b5cd2d9a33fd) successfully deleted.
+wan
+Connection 'wan' (85928b53-6571-4191-873c-4c45d5aeb81e) successfully added.
+[03-Feb-2025 09:24:24 UTC] WAN DNS configuration command output: wan
+Connection 'wan' (670641af-3c50-4527-b439-b5cd2d9a33fd) successfully deleted.
+wan
+Connection 'wan' (85928b53-6571-4191-873c-4c45d5aeb81e) successfully added.
+[03-Feb-2025 09:24:31 UTC] Deleted existing WAN connection before reconfiguring.
+[03-Feb-2025 09:24:31 UTC] Deleted existing WAN connection before reconfiguring.
+[03-Feb-2025 09:24:31 UTC] WAN configuration command output: wan
+Connection 'wan' (85928b53-6571-4191-873c-4c45d5aeb81e) successfully deleted.
+Connection 'wan' (736cdbaa-61bf-45e5-ab69-d15841474167) successfully added.
+[03-Feb-2025 09:24:31 UTC] WAN DNS configuration command output: wan
+Connection 'wan' (85928b53-6571-4191-873c-4c45d5aeb81e) successfully deleted.
+Connection 'wan' (736cdbaa-61bf-45e5-ab69-d15841474167) successfully added.
+[03-Feb-2025 10:12:30 UTC] WAN configuration command output: Warning: There is another connection with the name 'wan'. Reference the connection by its uuid 'ae3e6bb9-efd3-41b5-bab5-a0a4958f56b7'
+Connection 'wan' (ae3e6bb9-efd3-41b5-bab5-a0a4958f56b7) successfully added.
+[03-Feb-2025 10:12:30 UTC] WAN DNS configuration command output: Warning: There is another connection with the name 'wan'. Reference the connection by its uuid 'ae3e6bb9-efd3-41b5-bab5-a0a4958f56b7'
+Connection 'wan' (ae3e6bb9-efd3-41b5-bab5-a0a4958f56b7) successfully added.
+Warning: There is another connection with the name 'wan'. Reference the connection by its uuid '736cdbaa-61bf-45e5-ab69-d15841474167'
+[03-Feb-2025 10:24:04 UTC] Deleted existing WAN connection before reconfiguring.
+[03-Feb-2025 10:24:04 UTC] Deleted existing WAN connection before reconfiguring.
+[03-Feb-2025 10:24:04 UTC] WAN configuration command output: wan
+wan
+Connection 'wan' (ae3e6bb9-efd3-41b5-bab5-a0a4958f56b7) successfully deleted.
+Connection 'wan' (736cdbaa-61bf-45e5-ab69-d15841474167) successfully deleted.
+wan
+Connection 'wan' (72ad99e2-9d05-4d77-a0d3-c6cc04738a48) successfully added.
+[03-Feb-2025 10:24:04 UTC] WAN DNS configuration command output: wan
+wan
+Connection 'wan' (ae3e6bb9-efd3-41b5-bab5-a0a4958f56b7) successfully deleted.
+Connection 'wan' (736cdbaa-61bf-45e5-ab69-d15841474167) successfully deleted.
+wan
+Connection 'wan' (72ad99e2-9d05-4d77-a0d3-c6cc04738a48) successfully added.

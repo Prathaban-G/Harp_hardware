@@ -1,0 +1,11 @@
+[Unit]
+Description=Network Manager Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/localserver/main.py
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
