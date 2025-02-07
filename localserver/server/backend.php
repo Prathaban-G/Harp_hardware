@@ -80,11 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }elseif ($communicationType === "WIFI") {
             $ssid = $_POST['ssid'];
             $password = $_POST['password'];
-            $countryCode = $_POST['countryCode']; // Get country code from form
+            $countryCode = $_POST['countryCode'];
+            $securityType = $_POST['securityType']; // Get security type from form
         
             error_log("SSID: " . $ssid);
             error_log("Password: " . $password);
             error_log("Country Code: " . $countryCode);
+            error_log("Security Type: " . $securityType);
         
             // Bring down MyHotspot connection
             exec("sudo nmcli connection down MyHotspot", $output, $resultCode);
@@ -94,21 +96,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         
             // Set country code
-            exec("sudo iw reg set $countryCode", $output, $resultCode);
+            exec("sudo iw sudo raspi-config nonint do_wifi_country $countryCode", $output, $resultCode);
             sleep(1);
             if ($resultCode !== 0) {
                 throw new Exception("Failed to set country code.");
             }
         
-            // Update existing connection profile with new SSID and password
+            // Update SSID
             exec("sudo nmcli connection modify Wifi 802-11-wireless.ssid '$ssid'", $output, $resultCode);
             if ($resultCode !== 0) {
                 throw new Exception("Failed to update SSID.");
             }
         
-            exec("sudo nmcli connection modify Wifi 802-11-wireless-security.psk '$password'", $output, $resultCode);
+            // Configure security settings based on selection
+            switch ($securityType) {
+                case 'none':
+                    exec("sudo nmcli connection modify Wifi 802-11-wireless-security.key-mgmt none", $output, $resultCode);
+                    break;
+                
+                case 'wpa-wpa2-personal':
+                    exec("sudo nmcli connection modify Wifi 802-11-wireless-security.key-mgmt wpa-psk", $output, $resultCode);
+                    exec("sudo nmcli connection modify Wifi 802-11-wireless-security.psk '$password'", $output, $resultCode);
+                    break;
+                
+                case 'wpa3-personal':
+                    exec("sudo nmcli connection modify Wifi 802-11-wireless-security.key-mgmt sae", $output, $resultCode);
+                    exec("sudo nmcli connection modify Wifi 802-11-wireless-security.psk '$password'", $output, $resultCode);
+                    break;
+                
+                case 'wpa-wpa2-enterprise':
+                    exec("sudo nmcli connection modify Wifi 802-11-wireless-security.key-mgmt wpa-eap", $output, $resultCode);
+                    break;
+        
+                case 'leap':
+                    exec("sudo nmcli connection modify Wifi 802-11-wireless-security.key-mgmt ieee8021x", $output, $resultCode);
+                    break;
+        
+                case 'owe':
+                    exec("sudo nmcli connection modify Wifi 802-11-wireless-security.key-mgmt owe", $output, $resultCode);
+                    break;
+                
+                default:
+                    throw new Exception("Invalid security type selected.");
+            }
+        
             if ($resultCode !== 0) {
-                throw new Exception("Failed to update password.");
+                throw new Exception("Failed to update Wi-Fi security settings.");
             }
         
             // Bring up the connection again
@@ -117,6 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($resultCode !== 0) {
                 throw new Exception("Failed to reconnect to Wi-Fi.");
             }
+        
             exec("nmcli connection modify Wifi autoconnect yes", $output, $resultCode);
             if ($resultCode !== 0) {
                 throw new Exception("Failed to set autoconnect for Wi-Fi.");
@@ -124,6 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
             error_log("Wi-Fi configuration updated successfully.");
         }
+        
         
       
          elseif ($communicationType === "SIM" && !empty($simApn)) {

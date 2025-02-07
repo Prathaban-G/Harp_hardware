@@ -436,6 +436,18 @@
                     <input type="text" name="ssid" id="ssid" placeholder="Enter SSID">
                 </div>
                 <div class="input-group">
+                    <label for="securityType">Security Type</label>
+                    <select id="securityType" name="securityType">
+                        <option value="none">None</option>
+                        <option value="wpa-wpa2-personal">WPA & WPA2 Personal</option>
+                        <option value="wpa3-personal">WPA3 Personal</option>
+                        <option value="wpa-wpa2-enterprise">WPA & WPA2 Enterprise</option>
+                        <option value="leap">LEAP</option>
+                        <option value="owe">Enhanced Open (OWE)</option>
+                    </select>
+                </div>
+            
+                <div class="input-group">
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" placeholder="Enter Password">
                 </div>
